@@ -1,10 +1,19 @@
-var req = new XMLHttpRequest(); //建立物件
-req.open(
-  "GET",
-  "https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json",
-  true
-); //請求 使用同步
-req.send();
+// var req = new XMLHttpRequest(); //建立物件
+
+function get(url) {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open("get", url);
+    req.send();
+    req.onload = function () {
+      if (req.status === 200) {
+        resolve(JSON.parse(req.responseText));
+      } else {
+        reject("new Error(err)");
+      }
+    };
+  });
+}
 
 var re1 = /臺北市\s+(.*)/;
 var re2 = /https:\/\/.*?jpg/;
@@ -19,12 +28,12 @@ var create_allcontent = function (element, attributes, text = null) {
   }
   return newnode;
 };
-function getalldata(Object) {
-  var data = JSON.parse(Object.responseText);
+function getalldata(res) {
+  var data = res;
   var all_Data = [];
   for (let i = 0; i < data["result"]["results"].length; i++) {
     var single_data = {};
-    for (const key of ["stitle", "longitude", "xbody", "address", "file"]) {
+    for (let key of ["stitle", "longitude", "xbody", "address", "file"]) {
       try {
         if (key === "address") {
           data["result"]["results"][i][key].match(re1);
@@ -43,10 +52,9 @@ function getalldata(Object) {
     }
     all_Data.push(single_data);
   }
-  console.log(all_Data);
   return all_Data;
 }
-var create_box = function (array) {
+let create_box = function (array) {
   array.forEach((x) => {
     var boxcontainer = document.querySelector(".l-boxcontainer");
     var box = create_allcontent("div", { class: "box box--bgcolor" });
@@ -96,12 +104,7 @@ var create_box = function (array) {
     box__icons.appendChild(text_grey);
   });
 };
-req.onload = () => {
-  var all_Data = getalldata(req);
-  create_box(all_Data);
-  loadmoreimgbtn();
-  loadimgcontext();
-};
+
 function loadmoreimgbtn() {
   var btn = document.querySelector(".js-btn");
   var boxshow = 8;
@@ -148,3 +151,32 @@ function loadimgcontext() {
     });
   }
 }
+//使用async
+//這邊如沒有await get，會變成請求那邊的異步，會被丟到最後做，後面通通沒資料，所以一定要await
+async function main() {
+  try {
+    //取得的是promise的resolve包的para
+    let res = await get(
+      "https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json"
+    );
+    // block scope關係如果分開，會收不到定義的res變數
+    let all_Data = getalldata(res);
+    create_box(all_Data);
+    loadmoreimgbtn();
+    loadimgcontext();
+  } catch (reject) {
+    // catch會接受到的東西是定義在promise的reject
+    console.log("catch", reject);
+  }
+}
+//使用promise的長相會變這樣
+// get("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json").then(
+//   (res)=>{
+//     let all_Data=getalldata(res)
+//     create_box(all_Data);
+//     loadmoreimgbtn();
+//     loadimgcontext();
+//     return getalldata(res)}
+// )
+//執行主程式
+main();
