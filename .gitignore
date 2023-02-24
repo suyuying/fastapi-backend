@@ -5,3 +5,9 @@ __pycache__/
 alembic
 alembic.ini
 *config.py
+bin/
+lib/
+pyvenv.cfg
+sql_app/.env
+sql_app/schema/test.py
+test.py
