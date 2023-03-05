@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 from os import environ
 from json import loads
 from functools import lru_cache
-
+from sqlalchemy import create_engine
 # 這個oauth2_scheme怎麼整併到settings要再想想，因為它的功能是會檢查token，會牽涉到檢查最後return token，用setting會不知道他在幹嘛
 # token跟誰拿，這邊用相對url拿
-
+# *4#vX2GJ9khugM@
 load_dotenv()
 class Settings(BaseSettings):
 
@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = 'utf-8'
+
 
 # 基本config 壹定要放在這
 @lru_cache()

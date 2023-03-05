@@ -10,3 +10,4 @@ pyvenv.cfg
 sql_app/.env
 sql_app/schema/test.py
 test.py
+week*

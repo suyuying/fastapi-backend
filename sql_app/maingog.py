@@ -25,7 +25,6 @@ control_insert_role=False
 if not control_insert_role:
     models.Role.insert_roles()
     control_insert_role=True
-    print("should only insert one time")
 # 掃table，確認現在是否有所需欄位，沒有建立，有就continue
 models.ArticleCategory.insert_category()
 app = FastAPI()

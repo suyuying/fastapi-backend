@@ -23,7 +23,6 @@ def get_db():
 async def get_token_info(token: str = Depends(oauth2_scheme), settings=Depends(get_settings)):
     # 檢查header是否有sub
     try:
-        print(token)
         # 解開token
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         user_id: int = payload.get("sub")

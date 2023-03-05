@@ -9,6 +9,8 @@ from ..config import get_settings
 # db操作介面
 engine = create_engine(
     get_settings().SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+# get_settings().SQLALCHEMY_DATABASE_URL
+
 )
 # 建立session class ，當instance產生就可以透過engine跟db互動
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
