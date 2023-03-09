@@ -29,5 +29,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: suyuying/fastapi-backend:${{ github.sha }}, suyuying/fastapi-backend:${{ matrix.os }}-{{ matrix.arch }}
+        tags: suyuying/fastapi-backend:v1
         platform: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
