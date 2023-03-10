@@ -27,7 +27,7 @@ jobs:
         echo "repository variable : ${{ vars.HELLO }}"
     - uses: mr-smithers-excellent/docker-build-push@v6
       with:
-        image: suyuying/fastapi-backend:1.1
+        image: ghcr.io/suyuying/fastapi-backend:1.1
         registry: ghcr.io
         githubOrg: override-org # optional
         username: ${{ secrets.GHCR_USERNAME }}
