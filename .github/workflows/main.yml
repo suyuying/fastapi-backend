@@ -29,8 +29,8 @@ jobs:
       - name: READ vaialbe test
         run : | 
           echo '$read_my_name'
-          echo $read_my_name
-          echo $READ_MY_NAME
+          echo ${{ env.read_my_name}}
+          echo ${{ env.READ_MY_NAME }}
       - name: Checkout repository
         uses: actions/checkout@v3
 
