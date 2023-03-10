@@ -43,4 +43,4 @@ jobs:
           image: suyuying/fastapi-backend
           registry: ghcr.io
           username: ${{ secrets.GHCR_USERNAME }}
-          password: "$GHCR_TOKEN"
+          password: ${{ secrets.GHCR_TOKEN }}
