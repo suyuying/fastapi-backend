@@ -1,9 +1,12 @@
-FROM python:3.11
+# FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
+FROM  python:3.11
 WORKDIR /code
 COPY ./requirment.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN uname -a > /os.txt
 COPY ./sql_app /code/app
-ENV PORT 8080
-EXPOSE 8080
+ENV PORT 80
+EXPOSE 80
 
-CMD ["uvicorn", "app.maingog:app", "--host", "0.0.0.0", "--port", "8080"]
+
+ENTRYPOINT ["uvicorn", "app.maingog:app", "--host", "0.0.0.0", "--port", "80"]
