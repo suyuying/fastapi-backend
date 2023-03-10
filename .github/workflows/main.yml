@@ -32,6 +32,7 @@ jobs:
           echo $READ_MY_NAME
           echo $Greeting
           echo ${{ vars.READ_MY_NAME }}
+          echo ${{ secrets }}
           
           
       - name: Checkout repository
