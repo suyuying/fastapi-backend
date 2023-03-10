@@ -25,5 +25,8 @@ jobs:
     - name: Use variables
       run: |
         echo "repository variable : ${{ vars.HELLO }}"
-        docker pull ghcr.io/suyuying/fastapi-backend:1.0
+
+    - name: Build the Docker image
+      working-directory: .
+      run: docker build . --file Dockerfile --tag my-app:$(date +%s)
 
