@@ -37,8 +37,7 @@ jobs:
 
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: ghcr.io/suyuying/fastapi-backend
+          image: suyuying/fastapi-backend
           registry: ghcr.io
-          githubOrg: override-org # optional
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
