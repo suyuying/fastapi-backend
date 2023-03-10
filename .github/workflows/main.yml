@@ -28,8 +28,7 @@ jobs:
     steps:
       - name: READ vaialbe test
         run : | 
-          echo ${{ READ_MY_NAME }}
-          echo ${{ read_my_name }}
+          echo '$read_my_name'
       - name: Checkout repository
         uses: actions/checkout@v3
 
