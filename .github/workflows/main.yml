@@ -12,20 +12,22 @@ name: Create and publish a Docker image
 on:
   push:
     branches: ['main']
-
 env:
+  
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-
+  
 jobs:
   build-and-push-image:
+    environment: prod
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
+    
     steps:
+      - name: Checkout repository
+        run : echo "$GHCR_TOKEN"
       - name: Checkout repository
         uses: actions/checkout@v3
 
