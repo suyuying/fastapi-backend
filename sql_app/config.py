@@ -8,7 +8,9 @@ from sqlalchemy import create_engine
 # token跟誰拿，這邊用相對url拿
 # *4#vX2GJ9khugM@
 import os
+from json import loads
 class Settings(BaseSettings):
+    load_dotenv(find_dotenv())
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
@@ -19,10 +21,10 @@ class Settings(BaseSettings):
     TOKENURL:str
     FLASKY_ADMIN :EmailStr
     # ARTICLE_CATEGORY=["PythonBasic", "Fastapi", "DataScience", "PythonModule", "LinuxShellScript", "JavaScriptBasic","React"]
-    ARTICLE_CATEGORY:list[str]
-    class Config:
-        env_file = os.path.join(os.path.dirname(__file__),'.env')
-        env_file_encoding = 'utf-8'
+    ARTICLE_CATEGORY:list[str]=loads(os.environ.get('ARTICLE_CATEGORY'))
+    # class Config:
+    #     env_file = os.path.join(os.path.dirname(__file__),'.env')
+    #     env_file_encoding = 'utf-8'
 
 
 # 基本config 壹定要放在這
@@ -30,3 +32,4 @@ class Settings(BaseSettings):
 def get_settings():
     return Settings()
 oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl=get_settings().TOKENURL)
+print(get_settings().ARTICLE_CATEGORY)
