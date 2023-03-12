@@ -62,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          platforms: linux/amd64,linux/arm/v7
+          platforms: linux/amd64,linux/arm/v8
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           file: ./Dockerfile
 #      - uses: mr-smithers-excellent/docker-build-push@v6
