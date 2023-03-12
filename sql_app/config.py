@@ -1,7 +1,7 @@
 from .utilis import OAuth2PasswordBearerWithCookie
 from pydantic import BaseSettings,EmailStr
 from passlib.context import CryptContext
-from dotenv import load_dotenv
+from dotenv import load_dotenv,find_dotenv
 from os import environ
 from json import loads
 from functools import lru_cache
@@ -9,9 +9,9 @@ from sqlalchemy import create_engine
 # 這個oauth2_scheme怎麼整併到settings要再想想，因為它的功能是會檢查token，會牽涉到檢查最後return token，用setting會不知道他在幹嘛
 # token跟誰拿，這邊用相對url拿
 # *4#vX2GJ9khugM@
-load_dotenv()
-class Settings(BaseSettings):
 
+class Settings(BaseSettings):
+    load_dotenv(find_dotenv())
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
@@ -19,9 +19,9 @@ class Settings(BaseSettings):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     # sql連線網址
     SQLALCHEMY_DATABASE_URL:str
-    tokenUrl:str
+    TOKENURL:str
     FLASKY_ADMIN :EmailStr
-    article_category:list[str]=loads(environ['article_category'])
+    ARTICLE_CATEGORY:list[str]=loads(environ['ARTICLE_CATEGORY'])
     class Config:
         env_file = ".env"
         env_file_encoding = 'utf-8'
@@ -32,4 +32,4 @@ class Settings(BaseSettings):
 def get_settings():
     return Settings()
 
-oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl=get_settings().tokenUrl)
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl=get_settings().TOKENURL)

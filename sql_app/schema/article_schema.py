@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, ValidationError
 from typing import Literal, Union
 from datetime import datetime
 from ..config import get_settings
-article_category=get_settings().article_category
+article_category=get_settings().ARTICLE_CATEGORY
 
 class ArticleCategory_relation(BaseModel):
     category: str

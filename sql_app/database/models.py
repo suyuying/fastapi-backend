@@ -126,7 +126,7 @@ class ArticleCategory(Base):
         super(ArticleCategory, self).__init__(**kwargs)
     @staticmethod
     def insert_category():
-        categories = get_settings().article_category
+        categories = get_settings().ARTICLE_CATEGORY
         db = next(get_db())
         for r in categories:
             category = db.query(ArticleCategory).filter_by(category=r).first()
