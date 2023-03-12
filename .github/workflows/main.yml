@@ -52,19 +52,21 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Lowercase the repo name
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-          file: ./Dockerfile
-#      - uses: mr-smithers-excellent/docker-build-push@v6
+#      - name: Build and push container image to registry
+#        uses: docker/build-push-action@v2
 #        with:
-#          image: fastapi-backend
-#          registry: ghcr.io
-#          username: ${{ secrets.GHCR_USERNAME }}
-#          password: ${{ secrets.GHCR_TOKEN }}
-#          tag_with_sha: true
+#          push: true
+#          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+#          file: ./Dockerfile
+      - uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: ${{ env.REPO }}
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+          tag: ${{ github.sha }},latest
+          multiPlatform: true
+          platform: linux/amd64,linux/arm64,linux/arm/v7
   deploy:
     runs-on: ubuntu-latest
 

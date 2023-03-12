@@ -1,5 +1,5 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
-#FROM  python:3.11
+#FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
+FROM  --platform=$TARGETPLATFORM python:3.11
 WORKDIR /code
 COPY ./requirment.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
