@@ -2,8 +2,6 @@ from .utilis import OAuth2PasswordBearerWithCookie
 from pydantic import BaseSettings,EmailStr
 from passlib.context import CryptContext
 from dotenv import load_dotenv,find_dotenv
-from os import environ
-from json import loads
 from functools import lru_cache
 from sqlalchemy import create_engine
 # 這個oauth2_scheme怎麼整併到settings要再想想，因為它的功能是會檢查token，會牽涉到檢查最後return token，用setting會不知道他在幹嘛
@@ -21,7 +19,8 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URL:str
     TOKENURL:str
     FLASKY_ADMIN :EmailStr
-    ARTICLE_CATEGORY:list[str]=loads(environ['ARTICLE_CATEGORY'])
+    ARTICLE_CATEGORY:list[str]
+
     class Config:
         env_file = ".env"
         env_file_encoding = 'utf-8'
@@ -31,5 +30,4 @@ class Settings(BaseSettings):
 @lru_cache()
 def get_settings():
     return Settings()
-
 oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl=get_settings().TOKENURL)
