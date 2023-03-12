@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URL:str
     TOKENURL:str
     FLASKY_ADMIN :EmailStr
-    ARTICLE_CATEGORY=["PythonBasic", "Fastapi", "DataScience", "PythonModule", "LinuxShellScript", "JavaScriptBasic","React"]
-
+    # ARTICLE_CATEGORY=["PythonBasic", "Fastapi", "DataScience", "PythonModule", "LinuxShellScript", "JavaScriptBasic","React"]
+    ARTICLE_CATEGORY:list[str]
     class Config:
         env_file = os.path.join(os.path.dirname(__file__),'.env')
         env_file_encoding = 'utf-8'
