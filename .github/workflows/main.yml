@@ -48,7 +48,7 @@ jobs:
           touch sql_app/.env
           echo API_ENDPOINT="https://xxx.execute-api.us-west-2.amazonaws.com" >> sql_app/.env
           echo API_KEY=${{ secrets.API_KEY }} >> sql_app/.env
-          cat sql_app/.env
+          echo "${{ secrets.ENV_FILE }}" > sql_app/.env
       - name: checko rep
         run: |
           ls -a sql_app/
