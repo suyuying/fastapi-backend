@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, ValidationError
 from typing import Literal, Union
 from datetime import datetime
 from ..config import get_settings
-article_category=get_settings().ARTICLE_CATEGORY
+# article_category=get_settings().ARTICLE_CATEGORY
 
 class ArticleCategory_relation(BaseModel):
     category: str
@@ -22,7 +22,8 @@ class ArticleBase(BaseModel):
         orm_mode = True
 class ArticleCreateInfo(ArticleBase):
     # 限制類別須在定義的article_category內，不包含會報錯
-    category : Literal[*article_category]
+    # category : Literal[*article_category]
+    pass
 
 class ArticleGetInfo(ArticleBase):
     id:int
