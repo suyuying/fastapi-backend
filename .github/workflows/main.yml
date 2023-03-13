@@ -29,18 +29,7 @@ jobs:
     env:
       Greeting: Hello
     
-    steps:
-      - name: READ vaialbe test
-        run : | 
-          echo '$read_my_name'
-          echo ${{ env.read_my_name}}
-          echo ${{ env.READ_MY_NAME }}
-          echo $READ_MY_NAME
-          echo $Greeting
-          echo ${{ vars.READ_MY_NAME }}
-          echo ${{ secrets.HELLO }}
-          
-          
+    steps:          
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: 'Create env file'
@@ -50,6 +39,17 @@ jobs:
           echo API_KEY=${{ secrets.API_KEY }} >> sql_app/.env
           echo "${{ secrets.ENV_FILE }}" > sql_app/.env
           echo "${{ vars.TEST }}"
+      - name: READ vaialbe test
+        run : | 
+          echo '$read_my_name'
+          echo ${{ env.read_my_name}}
+          echo ${{ env.READ_MY_NAME }}
+          echo $READ_MY_NAME
+          echo $Greeting
+          echo ${{ vars.READ_MY_NAME }}
+          echo ${{ vars.TEST }} > ./test.txt
+          cat ./test.txt
+          
       - name: checko rep
         run: |
           ls -a sql_app/
