@@ -35,8 +35,8 @@ jobs:
       - name: 'Create env file'
         run: |
           touch sql_app/.env
-          echo ${{ secrets.ENV_FILE }} > sql_app/.env
-          echo ${{ vars.TEST }}
+          echo "${{ secrets.ENV_FILE }}" > sql_app/.env
+          
       - name: checko rep
         run: |
           ls -a sql_app/
@@ -58,6 +58,7 @@ jobs:
         with:
           push: true
           context: .
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           file: ./Dockerfile
 #      - uses: mr-smithers-excellent/docker-build-push@v6
@@ -70,6 +71,24 @@ jobs:
 #          multiPlatform: true
 ##          arm64 build跑超久 先取消
 #          platform: linux/amd64,linux/arm/v7
+  deploy:
+    runs-on: ubuntu-latest
 
+    needs: build
 
+    environment:
+      name: prod
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
+    steps:
+      - name: Lowercase the repo name
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@0b651ed7546ecfc75024011f76944cb9b381ef1e
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
+ 
