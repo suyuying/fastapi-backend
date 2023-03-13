@@ -6,7 +6,7 @@ from functools import lru_cache
 from sqlalchemy import create_engine
 # 這個oauth2_scheme怎麼整併到settings要再想想，因為它的功能是會檢查token，會牽涉到檢查最後return token，用setting會不知道他在幹嘛
 # token跟誰拿，這邊用相對url拿
-# *4#vX2GJ9khugM@
+
 import os
 from json import loads
 class Settings(BaseSettings):
@@ -20,7 +20,6 @@ class Settings(BaseSettings):
     SQLALCHEMY_DATABASE_URL:str
     TOKENURL:str
     FLASKY_ADMIN :EmailStr
-    # ARTICLE_CATEGORY=["PythonBasic", "Fastapi", "DataScience", "PythonModule", "LinuxShellScript", "JavaScriptBasic","React"]
     ARTICLE_CATEGORY:list[str]=loads(os.environ.get('ARTICLE_CATEGORY'))
     # class Config:
     #     env_file = os.path.join(os.path.dirname(__file__),'.env')
@@ -32,4 +31,3 @@ class Settings(BaseSettings):
 def get_settings():
     return Settings()
 oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl=get_settings().TOKENURL)
-print(get_settings().ARTICLE_CATEGORY)

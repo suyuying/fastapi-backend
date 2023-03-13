@@ -9,7 +9,6 @@ from .tools import create_access_token
 from .database import database,models,create,read,update,delete
 from .database.db_tools import authenticate_member
 from .dependencies import get_db,admin_required
-import aiofiles
 
 from .routes import message,member,article
 from .schema.dependencies_schema import Token
