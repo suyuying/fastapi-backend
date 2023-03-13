@@ -35,20 +35,7 @@ jobs:
       - name: 'Create env file'
         run: |
           touch sql_app/.env
-          echo API_ENDPOINT="https://xxx.execute-api.us-west-2.amazonaws.com" >> sql_app/.env
-          echo API_KEY=${{ secrets.API_KEY }} >> sql_app/.env
           echo "${{ secrets.ENV_FILE }}" > sql_app/.env
-          echo "${{ vars.TEST }}"
-      - name: READ vaialbe test
-        run : | 
-          echo '$read_my_name'
-          echo ${{ env.read_my_name}}
-          echo ${{ env.READ_MY_NAME }}
-          echo $READ_MY_NAME
-          echo $Greeting
-          echo ${{ vars.READ_MY_NAME }}
-          echo ${{ vars.TEST }} > ./test.txt
-          cat ./test.txt
           
       - name: checko rep
         run: |
@@ -104,10 +91,6 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
-  prod-check:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Deploying to production server on branch $GITHUB_REF"
+
 
 

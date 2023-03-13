@@ -10,7 +10,8 @@ from sqlalchemy import create_engine
 import os
 from json import loads
 class Settings(BaseSettings):
-    load_dotenv(find_dotenv())
+    if not load_dotenv(find_dotenv()):
+        load_dotenv(find_dotenv("/etc/secrets/.env"))
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
