@@ -32,6 +32,7 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://hesdas.github.io"
 ]
 
 app.add_middleware(
