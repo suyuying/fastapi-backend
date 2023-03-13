@@ -41,9 +41,11 @@ def create_article(db: Session, article: ArticleCreateInfo, current_member: Memb
     return article
 
 # create message
-def create_message(db: Session, message: MessageCreateInfo, member_table: Member):
+def create_message(db: Session, message: MessageCreateInfo):
+    article_id=db.query(Article).filter(Article.id==message.article_id).first()
+
     # 用外鍵關聯做出外鍵項目
-    message = Message(**message.dict(), member_relation=member_table)  # 要轉換.dict是pydantic->dict
+    message = Message(**message.dict(), articles_relation=article_id)  # 要轉換.dict是pydantic->dict
     db.add(message)
     db.commit()
     db.refresh(message)

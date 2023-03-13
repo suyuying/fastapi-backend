@@ -37,6 +37,10 @@ def get_member_id(db: Session, member_id: int):
 def get_allmember_message(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Message).offset(skip).limit(limit).all()
 
+def get_article_message(article_id:int,db: Session, skip: int = 0, limit: int = 100):
+
+    return db.query(Message).filter(Message.article_id == article_id).offset(skip).limit(limit).all()
+
 
 def get_member_message(db: Session, member_table: Member, skip: int = 0, limit: int = 100):
     return db.query(Message).filter(Message.member_id == member_table.id).offset(skip).limit(limit).all()
