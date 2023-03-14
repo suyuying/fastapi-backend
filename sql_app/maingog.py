@@ -33,7 +33,7 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "https://hesdas.github.io",
-    "https://d3658nk4q1eoc3.cloudfront.net/"
+    "https://d3658nk4q1eoc3.cloudfront.net"
 ]
 
 app.add_middleware(
